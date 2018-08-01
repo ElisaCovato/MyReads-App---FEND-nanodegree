@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Book = ({authors, thumbnail, title}) => (
+const Book = ({authors, thumbnail, title, shelf, moveTo}) => (
           <li>
                         <div className="book">
                           <div className="book-top">
@@ -13,7 +13,7 @@ const Book = ({authors, thumbnail, title}) => (
                             	}} >
                             </div>
                             <div className="book-shelf-changer">
-                              <select>
+                              <select value={shelf} onChange={moveTo}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -33,7 +33,9 @@ const Book = ({authors, thumbnail, title}) => (
 Book.proptypes = {
 	authors: PropTypes.array,
 	thumbnail: PropTypes.string,
-	title: PropTypes.string
+	title: PropTypes.string,
+  shelf: PropTypes.string,
+  moveTo: PropTypes.func,
 }
 
-export default Book
+export default Book;

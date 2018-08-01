@@ -9,7 +9,6 @@ export default class BookShelfMain extends Component {
 	//the arrays will be filled onece we get the books 
 	//from BooksAPI
 	state = {
-		books: [],
 		currentlyReading: [],
 		wantToRead: [],
 		read: [],
@@ -17,16 +16,21 @@ export default class BookShelfMain extends Component {
 
 	//we use this function to fetch the books data from the the BooksAPI.js
 	componentDidMount() {
+		//we fetch the books and put in the right shelf
+		this.fetchBooks();
+	}
+	// define function to fetch the books
+	fetchBooks = () => {
 		BooksAPI.getAll().then(books => {
 			//put the books in the right state/array
 			this.setState({
-				books: books,
 				currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
 				wantToRead: books.filter(book => book.shelf === 'wantToRead'),
 				read: books.filter(book => book.shelf === 'read'),
 			})
 		})
 	}
+
 
 	render() {
 		const {currentlyReading, wantToRead, read} = this.state;
@@ -41,14 +45,18 @@ export default class BookShelfMain extends Component {
               	<Shelf 
               		title='Currently Reading'
               		books={currentlyReading}
+              		//re-check that the books are in the right place
+              		refetchBooks={this.fetchBooks}
               	/>
               	<Shelf 
               		title='Want to Read'
               		books={wantToRead}
+              		refetchBooks={this.fetchBooks}
               	/> 
               	<Shelf 
               		title='Read'
               		books={read}
+              		refetchBooks={this.fetchBooks}
               	/>               	              	         
               </div>
             </div>

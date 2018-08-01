@@ -1,9 +1,18 @@
 import React from 'react'
 import { Component } from 'react'
 import Book from './Book.js'
+import * as BooksAPI from '../BooksAPI'
 import PropTypes from 'prop-types'
 
 class Shelf extends Component {
+  //this makes us to move books in different shelves
+  moveTo = (e, book) => {
+    const shelf = e.target.value;
+    // we update the status of the books
+    BooksAPI.update(book, shelf).then((data) => {
+      this.props.refetchBooks();
+    });
+  }
 	//this show the shelf with the appropriate books on it
 	render() {
 		const{ title, books}=this.props;
@@ -18,6 +27,8 @@ class Shelf extends Component {
                     	authors={book.authors}
                     	thumbnail={book.imageLinks.thumbnail}
                     	title={book.title}
+                      shelf={book.shelf}
+                      moveTo={e=>this.moveTo(e,book)}
 						/>                    	
                     ))}
                     </ol>
@@ -31,7 +42,8 @@ class Shelf extends Component {
 // pass to our component are wanted data type
 Shelf.proptypes = {
 	title: PropTypes.string,
-	books: PropTypes.array
+	books: PropTypes.array,
+  refetchBooks: PropTypes.func,
 }
 
-export default Shelf
+export default Shelf;
