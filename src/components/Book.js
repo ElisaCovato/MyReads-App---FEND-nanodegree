@@ -24,7 +24,7 @@ const Book = ({authors, thumbnail, title, shelf, moveTo}) => (
                           </div>
                           <div className="book-title">{title}</div>
                           <div className="book-authors">
-                          	{authors.map(author => author)}
+                          	{authors ? authors.join(', '): 'Unknown Author'}
                           </div>
                         </div>  
                       </li> 

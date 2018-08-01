@@ -9,7 +9,7 @@ class Shelf extends Component {
   moveTo = (e, book) => {
     const shelf = e.target.value;
     // we update the status of the books
-    BooksAPI.update(book, shelf).then((data) => {
+    BooksAPI.update(book, shelf).then(() => {
       this.props.refetchBooks();
     });
   }
