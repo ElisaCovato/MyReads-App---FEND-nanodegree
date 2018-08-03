@@ -12,7 +12,7 @@ export default class SearchBar extends Component {
 
   //this function handles the search
   searchFor = (e) => {
-    const query = e.target.value.trim();
+    const query = e.target.value;
     if (query) {
       BooksAPI.search(query).then((results) => {
         if (results.length > 0) {
@@ -20,8 +20,14 @@ export default class SearchBar extends Component {
             results: results.filter(book => book.imageLinks)
           });
         }
+        else this.setState ({
+          results : []
+        })
       });
     }
+    else this.setState ({
+      results: []
+    });
   }
 
   searchMove = (e, book) => {
@@ -63,7 +69,7 @@ export default class SearchBar extends Component {
                   authors={book.authors}
                   thumbnail={book.imageLinks.thumbnail}
                   title={book.title}
-                  shelf="none"
+                  shelf={book.shelf}
                   moveTo={e => this.searchMove(e, book)}
                 />
                 ))}

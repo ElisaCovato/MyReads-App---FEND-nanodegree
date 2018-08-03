@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Shelf from '../components/Shelf'
@@ -14,12 +15,8 @@ export default class BookShelfMain extends Component {
 		read: [],
 	}
 
-	//we use this function to fetch the books data from the the BooksAPI.js
-	componentDidMount() {
-		//we fetch the books and put in the right shelf
-		this.fetchBooks();
-	}
-	// define function to fetch the books
+
+/*	// define function to fetch the books
 	fetchBooks = () => {
 		BooksAPI.getAll().then(books => {
 			//put the books in the right state/array
@@ -29,11 +26,19 @@ export default class BookShelfMain extends Component {
 				read: books.filter(book => book.shelf === 'read'),
 			})
 		})
+	}*/
+
+	sortBooks(books) {
+		return {
+				currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
+				wantToRead: books.filter(book => book.shelf === 'wantToRead'),
+				read: books.filter(book => book.shelf === 'read'),
+			};
 	}
 
-
 	render() {
-		const {currentlyReading, wantToRead, read} = this.state;
+		const {books, moveTo} = this.props;
+		const {currentlyReading, wantToRead, read} = this.sortBooks(books);
 		//returns the 3 shelves of books
 		return (
           <div className="list-books">
@@ -45,18 +50,17 @@ export default class BookShelfMain extends Component {
               	<Shelf 
               		title='Currently Reading'
               		books={currentlyReading}
-              		//re-check that the books are in the right place
-              		refetchBooks={this.fetchBooks}
+              		moveTo={moveTo}
               	/>
               	<Shelf 
               		title='Want to Read'
               		books={wantToRead}
-              		refetchBooks={this.fetchBooks}
+              		moveTo={moveTo}
               	/> 
               	<Shelf 
               		title='Read'
               		books={read}
-              		refetchBooks={this.fetchBooks}
+              		moveTo={moveTo}
               	/>               	              	         
               </div>
             </div>
@@ -64,6 +68,12 @@ export default class BookShelfMain extends Component {
               <Link to='/search'/>
             </div>
           </div>
-		)
+		);
 	}
+}
+
+
+BookShelfMain.proptypes = {
+  books: PropTypes.object,
+  moveTo: PropTypes.func,
 }

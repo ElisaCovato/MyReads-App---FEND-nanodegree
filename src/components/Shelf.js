@@ -5,17 +5,10 @@ import * as BooksAPI from '../BooksAPI'
 import PropTypes from 'prop-types'
 
 class Shelf extends Component {
-  //this makes us to move books in different shelves
-  moveTo = (e, book) => {
-    const shelf = e.target.value;
-    // we update the status of the books
-    BooksAPI.update(book, shelf).then(() => {
-      this.props.refetchBooks();
-    });
-  }
+
 	//this show the shelf with the appropriate books on it
 	render() {
-		const{ title, books}=this.props;
+		const{ title, books, moveTo}=this.props;
 		return (
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">{title}</h2>
@@ -23,12 +16,13 @@ class Shelf extends Component {
                     <ol className="books-grid">
                     {books.map((book, index) => (
 						<Book 
-						key={index}
+						  key={index}
                     	authors={book.authors}
                     	thumbnail={book.imageLinks.thumbnail}
                     	title={book.title}
                       shelf={book.shelf}
-                      moveTo={e=>this.moveTo(e,book)}
+                      moveTo={moveTo}
+                      book = {book}
 						/>                    	
                     ))}
                     </ol>
@@ -43,7 +37,7 @@ class Shelf extends Component {
 Shelf.proptypes = {
 	title: PropTypes.string,
 	books: PropTypes.array,
-  refetchBooks: PropTypes.func,
+  moveTo: PropTypes.func,
 }
 
 export default Shelf;

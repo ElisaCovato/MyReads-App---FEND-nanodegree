@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Book = ({authors, thumbnail, title, shelf, moveTo}) => (
+const Book = ({book, authors, thumbnail, title, shelf, moveTo}) => (
           <li>
                         <div className="book">
                           <div className="book-top">
@@ -13,7 +13,7 @@ const Book = ({authors, thumbnail, title, shelf, moveTo}) => (
                             	}} >
                             </div>
                             <div className="book-shelf-changer">
-                              <select value={shelf} onChange={moveTo}>
+                              <select value={shelf} onChange={ (e) => moveTo(e.target.value, book)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
