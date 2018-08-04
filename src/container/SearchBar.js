@@ -2,7 +2,7 @@ import React from 'react'
 import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Book from '../components/Book'
-import * as BooksAPI from '../BooksAPI'
+import PropTypes from 'prop-types'
 
 export default class SearchBar extends Component {
   //state of the books searched, array of results
@@ -10,35 +10,12 @@ export default class SearchBar extends Component {
     results : [],
   }
 
-  //this function handles the search
-  searchFor = (e) => {
-    const query = e.target.value;
-    if (query) {
-      BooksAPI.search(query).then((results) => {
-        if (results.length > 0) {
-          this.setState({
-            results: results.filter(book => book.imageLinks)
-          });
-        }
-        else this.setState ({
-          results : []
-        })
-      });
-    }
-    else this.setState ({
-      results: []
-    });
-  }
-
-  searchMove = (e, book) => {
-    const shelf = e.target.value;
-    BooksAPI.update(book, shelf).then(() => {
-      //update the books searched with the function above
-      this.props.history.push('/');
-    });
-  }
+handleSearch(e) {
+  this.props.searchFor(e.target.value).then((results) => this.setState({results}));
+}
 
 	render() {
+    const { moveTo} = this.props;
     const  {results} = this.state;
 		return (
           <div className="search-books">
@@ -56,7 +33,7 @@ export default class SearchBar extends Component {
                 <input 
                   type="text" 
                   placeholder="Search by title or author" 
-                  onChange = {this.searchFor}
+                  onChange = {(e) => this.handleSearch(e)}
                 />
 
               </div>
@@ -66,11 +43,12 @@ export default class SearchBar extends Component {
               {results.length > 0 && results.map((book, index) => (
                 <Book
                   key={index}
+                  book={book}
                   authors={book.authors}
                   thumbnail={book.imageLinks.thumbnail}
                   title={book.title}
                   shelf={book.shelf}
-                  moveTo={e => this.searchMove(e, book)}
+                  moveTo={moveTo}
                 />
                 ))}
               </ol>
@@ -78,4 +56,10 @@ export default class SearchBar extends Component {
           </div>			
 		)
 	}
+}
+
+
+SearchBar.proptypes = {
+  searchFor: PropTypes.func,
+  moveTo: PropTypes.func,
 }
