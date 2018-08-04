@@ -9,11 +9,11 @@ const Book = ({book, authors, thumbnail, title, shelf, moveTo}) => (
                             	style={{ 
                             		width: 128, 
                             		height: 193, 
-                            		backgroundImage: `url(${thumbnail})` 
+                            		backgroundImage: book.imageLinks ? `url(${book.imageLinks.thumbnail})` : null 
                             	}} >
                             </div>
                             <div className="book-shelf-changer">
-                              <select value={shelf} onChange={ (e) => moveTo(e.target.value, book)}>
+                              <select value={book.shelf} onChange={ (e) => moveTo(e.target.value, book)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -22,9 +22,9 @@ const Book = ({book, authors, thumbnail, title, shelf, moveTo}) => (
                               </select>
                             </div>
                           </div>
-                          <div className="book-title">{title}</div>
+                          <div className="book-title">{book.title}</div>
                           <div className="book-authors">
-                          	{authors ? authors.join(', '): 'Unknown Author'}
+                          	{book.authors ? book.authors.join(', '): 'Unknown Author'}
                           </div>
                         </div>  
                       </li> 

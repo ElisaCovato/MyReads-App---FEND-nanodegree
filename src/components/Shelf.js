@@ -17,10 +17,6 @@ class Shelf extends Component {
                     {books.map((book, index) => (
 						<Book 
 						  key={index}
-                    	authors={book.authors}
-                    	thumbnail={book.imageLinks.thumbnail}
-                    	title={book.title}
-                      shelf={book.shelf}
                       moveTo={moveTo}
                       book = {book}
 						/>                    	

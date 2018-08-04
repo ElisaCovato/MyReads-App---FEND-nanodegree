@@ -44,10 +44,6 @@ handleSearch(e) {
                 <Book
                   key={index}
                   book={book}
-                  authors={book.authors}
-                  thumbnail={book.imageLinks.thumbnail}
-                  title={book.title}
-                  shelf={book.shelf}
                   moveTo={moveTo}
                 />
                 ))}
