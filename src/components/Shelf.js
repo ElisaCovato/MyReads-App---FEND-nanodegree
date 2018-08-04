@@ -5,25 +5,24 @@ import * as BooksAPI from '../BooksAPI'
 import PropTypes from 'prop-types'
 
 class Shelf extends Component {
-
-	//this show the shelf with the appropriate books on it
+//this show the shelf with the appropriate books on it
 	render() {
 		const{ title, books, moveTo}=this.props;
 		return (
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">{title}</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                    {books.map((book, index) => (
-						<Book 
-						  key={index}
-                      moveTo={moveTo}
-                      book = {book}
-						/>                    	
-                    ))}
-                    </ol>
-                 </div>
-             </div>	
+      <div className="bookshelf">
+        <h2 className="bookshelf-title">{title}</h2>
+        <div className="bookshelf-books">
+          <ol className="books-grid">
+            {books.map((book, index) => (
+      				<Book 
+    					  key={index}
+                moveTo={moveTo}
+                book = {book}
+    					/>                    	
+            ))}
+          </ol>
+        </div>
+      </div>	
 		)
 	}
 }

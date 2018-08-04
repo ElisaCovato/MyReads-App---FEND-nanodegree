@@ -10,9 +10,9 @@ export default class SearchBar extends Component {
     results : [],
   }
 
-handleSearch(e) {
-  this.props.searchFor(e.target.value).then((results) => this.setState({results}));
-}
+  handleSearch(e) {
+    this.props.searchFor(e.target.value).then((results) => this.setState({results}));
+  }
 
 	render() {
     const { moveTo} = this.props;

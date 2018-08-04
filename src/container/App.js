@@ -22,23 +22,21 @@ class BooksApp extends React.Component {
 		});
 	}
 
-    //this function handles the search and associate to each result an appropriate shelf
+  //this function handles the search and associate to each result an appropriate shelf
   searchFor(query)  {
-
-     return BooksAPI.search(query).then(results => results && !results.error ? results : []).then((results) => {
-          return results.map(book => {
-            const shelvedBookIndex = this.state.books.findIndex(shelvedBook => shelvedBook.id===book.id)
-            var shelf;
-            if (shelvedBookIndex === -1) {
-              shelf = 'none';
-            } else shelf = this.state.books[shelvedBookIndex].shelf;
-            return Object.assign({shelf}, book);
-          }) }
-        )
-
+    return BooksAPI.search(query).then(results => results && !results.error ? results : []).then((results) => {
+      return results.map(book => {
+        const shelvedBookIndex = this.state.books.findIndex(shelvedBook => shelvedBook.id===book.id)
+        var shelf;
+        if (shelvedBookIndex === -1) {
+          shelf = 'none';
+        } else shelf = this.state.books[shelvedBookIndex].shelf;
+        return Object.assign({shelf}, book);
+      }) 
+    })
   }
 
-	  //this makes us to move books in different shelves
+	//this makes us to move books in different shelves
   moveTo(shelf, book) {
     // we update the status of the books
     BooksAPI.update(book, shelf).then(() => {

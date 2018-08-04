@@ -15,19 +15,6 @@ export default class BookShelfMain extends Component {
 		read: [],
 	}
 
-
-/*	// define function to fetch the books
-	fetchBooks = () => {
-		BooksAPI.getAll().then(books => {
-			//put the books in the right state/array
-			this.setState({
-				currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
-				wantToRead: books.filter(book => book.shelf === 'wantToRead'),
-				read: books.filter(book => book.shelf === 'read'),
-			})
-		})
-	}*/
-
 	sortBooks(books) {
 		return {
 				currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
